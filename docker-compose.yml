@@ -10,11 +10,12 @@ services:
     - ./app:/var/www
     links:
     - db
+    - redis
     environment:
     - DEPLOYMENT=development
 
   db:
-    image: mysql
+    image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -24,3 +25,8 @@ services:
       MYSQL_PASSWORD: p@ssw0rd!
     volumes:
     - ./data/mysql:/var/lib/mysql
+
+  redis:
+    image: redis:latest
+    volumes:
+      - ./data/redis

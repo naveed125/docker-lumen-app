@@ -16,3 +16,11 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api'], function() use ($router) {
+    $controller = new \App\Http\Controllers\ApiController();
+
+    $router->get('/hello/{name}', function ($name) use ($controller) {
+        return $controller->hello($name);
+    });
+});

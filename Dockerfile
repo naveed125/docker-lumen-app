@@ -22,10 +22,17 @@ RUN apk --no-cache add \
   php8-xmlreader \
   php8-zlib \
   php8-redis \
+  php8-xmlwriter \
+  php8-tokenizer \
   supervisor
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php8 /usr/bin/php
+
+# Add composer
+RUN curl -sS https://getcomposer.org/installer | php && \
+    chmod +x composer.phar && \
+    mv composer.phar /usr/local/bin/composer
 
 # Configure nginx
 COPY container/nginx.conf /etc/nginx/nginx.conf
@@ -54,5 +61,7 @@ COPY --chown=nobody src/ /var/www/
 # Expose the port nginx is reachable on
 EXPOSE 80
 
-# Let supervisord start nginx & php-fpm
-CMD ["/entrypoint.sh"]
+# Entrypoint script starts supervisord
+# Use it for any processing during container launch
+# Example generate .env file from a secrets manager
+ENTRYPOINT ["/entrypoint.sh"]

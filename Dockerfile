@@ -36,8 +36,7 @@ COPY container/php.ini /etc/php8/conf.d/custom.ini
 
 # Configure supervisord and entrypoint
 COPY container/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY container/supervisord.conf /etc/supervisord.conf
-COPY container/entrypoint.sh /
+COPY container/entrypoint.sh /entrypoint.sh
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www && \

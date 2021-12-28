@@ -6,8 +6,7 @@ services:
     ports:
     - "80:80"
     volumes:
-    - ./app/public:/var/www/html
-    - ./app:/var/www
+    - ./src:/var/www
     links:
     - db
     - redis

@@ -36,6 +36,7 @@ COPY container/php.ini /etc/php8/conf.d/custom.ini
 
 # Configure supervisord
 COPY container/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY container/supervisord.conf /etc/supervisord.conf
 
 # Setup document root
 RUN mkdir -p /var/www/html
@@ -51,7 +52,7 @@ USER nobody
 
 # Add application
 WORKDIR /var/www/html
-COPY --chown=nobody app/ /var/www/html/
+COPY --chown=nobody src/ /var/www/
 
 # Expose the port nginx is reachable on
 EXPOSE 80

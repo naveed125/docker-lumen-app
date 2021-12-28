@@ -34,9 +34,10 @@ COPY container/nginx.conf /etc/nginx/nginx.conf
 COPY container/fpm-pool.conf /etc/php8/php-fpm.d/www.conf
 COPY container/php.ini /etc/php8/conf.d/custom.ini
 
-# Configure supervisord
+# Configure supervisord and entrypoint
 COPY container/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY container/supervisord.conf /etc/supervisord.conf
+COPY container/entrypoint.sh /
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www && \
@@ -55,4 +56,4 @@ COPY --chown=nobody src/ /var/www/
 EXPOSE 80
 
 # Let supervisord start nginx & php-fpm
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/entrypoint.sh"]

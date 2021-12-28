@@ -48,7 +48,7 @@ RUN chown -R nobody.nobody /var/www && \
 USER nobody
 
 # Add application
-WORKDIR /var/www/html
+WORKDIR /var/www
 COPY --chown=nobody src/ /var/www/
 
 # Expose the port nginx is reachable on

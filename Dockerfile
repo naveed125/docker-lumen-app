@@ -47,18 +47,12 @@ COPY container/php.ini /etc/php8/conf.d/custom.ini
 COPY container/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY container/entrypoint.sh /entrypoint.sh
 
-# Make sure files/folders needed by the processes are accessable when they run under the nobody user
-RUN chown -R nobody.nobody /var/www && \
-  chown -R nobody.nobody /run && \
-  chown -R nobody.nobody /var/lib/nginx && \
-  chown -R nobody.nobody /var/log/nginx
-
-# Switch to use a non-root user from here on
-USER nobody
-
 # Add application
 WORKDIR /var/www
-COPY --chown=nobody src/ /var/www/
+COPY src/ /var/www/
+
+# Install composer dependencies
+RUN composer install --prefer-dist --no-dev
 
 # Expose the port nginx is reachable on
 EXPOSE 80

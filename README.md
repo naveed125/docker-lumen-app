@@ -3,7 +3,8 @@ PHP web app using [Docker](https://docker.com) and [Lumen Framework](https://lum
 
 # Quick Start
 1. Clone this repo
-2. Run `docker-compose up -d --force-recreate`
+2. Run `docker compose up -d --force-recreate`
+3. Run `docker exec -it docker-lumen-app-web-1 composer install`
 
 # Test the server is running
 `curl localhost`
